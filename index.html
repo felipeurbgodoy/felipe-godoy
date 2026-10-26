@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Felipe Godoy</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+                    },
+                    colors: {
+                        steel: {
+                            50: '#F8FAFC',
+                            100: '#F1F5F9',
+                            400: '#94A3B8',
+                            500: '#64748B',
+                            600: '#475569',
+                            800: '#1E293B',
+                            900: '#0F172A',
+                            950: '#020617',
+                            accent: '#2563EB',      /* Azul Aço Elegante */
+                            'accent-hover': '#1D4ED8',
+                            'accent-light': '#60A5FA'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+     <link rel="icon" type="image/png" href="./img/icon.png">
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="./css/index.css">
+
+    <!-- Ajustes responsivos: preservam o visual original e melhoram telas pequenas -->
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html { width: 100%; max-width: 100%; overflow-x: clip; -webkit-text-size-adjust: 100%; }
+        body { width: 100%; max-width: 100%; overflow-x: clip; }
+        img, svg, video, canvas { max-width: 100%; }
+        img { height: auto; }
+        button, input, textarea, select { font: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        a, button { touch-action: manipulation; }
+        p, h1, h2, h3, span, a, li { overflow-wrap: anywhere; }
+        main { width: 100%; min-width: 0; }
+        section { min-width: 0; scroll-margin-top: 1rem; }
+        #carousel-container { width: 100%; min-width: 0; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+        .project-card { min-width: min(85vw, 550px); }
+        #live-clock { white-space: nowrap; }
+        input, textarea { min-width: 0; max-width: 100%; }
+        textarea { resize: vertical; }
+        button, a { min-height: 40px; }
+        #theme-toggle { min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+        #prev-btn, #next-btn { flex: 0 0 40px; }
+
+        @media (max-width: 640px) {
+            header { padding: max(0.5rem, env(safe-area-inset-top)) 0.625rem 0; }
+            header > div {
+                gap: 0.5rem;
+                padding: 0.5rem 0.625rem;
+                border-radius: 0.75rem;
+                font-size: 10px;
+            }
+            header > div > div { min-width: 0; }
+            header > div > div:first-child { gap: 0.4rem; }
+            header #live-clock { letter-spacing: 0; font-size: 10px; }
+            header #theme-toggle { padding: 0.25rem; }
+            main {
+                padding-top: 6.5rem !important;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+                padding-bottom: 3rem !important;
+                gap: 4.5rem !important;
+            }
+            #hero { min-height: auto; padding-bottom: 2.5rem; gap: 1.5rem; }
+            #hero h1 { font-size: clamp(2.15rem, 9.2vw, 3.5rem); line-height: 1.08; }
+            #hero h1 br { display: none; }
+            #hero p { font-size: 1rem; line-height: 1.7; }
+            #hero > div:first-child { max-width: 100%; font-size: 10px; gap: 0.35rem; }
+            #hero > div:last-child { gap: 0.75rem; }
+            #hero > div:last-child a { width: 100%; justify-content: center; padding: 0.85rem 1rem; }
+            #projetos, #sobre, #habilidades, #trajetoria, #contato { padding-top: 2.5rem; }
+            #projetos { gap: 1rem; }
+            #projetos > div:first-child { align-items: stretch; }
+            #projetos h2, #habilidades h2, #trajetoria h2, #contato h2 { font-size: clamp(1.4rem, 6vw, 2rem); line-height: 1.2; }
+            #projetos > div:first-child > div:last-child { justify-content: space-between; }
+            #carousel-container { gap: 0.875rem; padding-top: 0.25rem; padding-bottom: 1rem; }
+            .project-card {
+                min-width: 86vw;
+                max-width: 86vw;
+                padding: 1rem;
+                gap: 1.25rem;
+                scroll-snap-align: center;
+            }
+            .project-card > div:first-child { gap: 1rem; }
+            .project-card .relative.w-full { height: clamp(10rem, 52vw, 13rem); }
+            .project-card h3 { font-size: 1.2rem; line-height: 1.3; }
+            .project-card > div:last-child { gap: 0.75rem; flex-wrap: wrap; }
+            .project-card > div:last-child a { font-size: 10px; }
+            #sobre { gap: 2rem; }
+            #sobre h2 { font-size: clamp(1.65rem, 7vw, 2.5rem); line-height: 1.2; }
+            #sobre .max-w-md { max-width: min(100%, 22rem); }
+            #habilidades .grid { gap: 1rem; }
+            #habilidades .grid > div { padding: 1rem; }
+            #habilidades li { align-items: flex-start; gap: 0.75rem; }
+            #habilidades li span:last-child { text-align: right; }
+            #trajetoria .relative.border-l { margin-left: 0.35rem; }
+            #trajetoria .relative.pl-8 { padding-left: 1.25rem; }
+            #trajetoria h3 { font-size: 1rem; line-height: 1.45; }
+            #contato > div:last-child { gap: 2rem; }
+            #contato .space-y-3 a { align-items: flex-start; }
+            #contato .space-y-3 a span { min-width: 0; }
+            #contato form { width: 100%; }
+            #contato input, #contato textarea { font-size: 16px; padding: 0.75rem; }
+            footer { text-align: center; line-height: 1.7; padding-bottom: max(2rem, env(safe-area-inset-bottom)); }
+        }
+
+        @media (max-width: 360px) {
+            header > div { padding-left: 0.45rem; padding-right: 0.45rem; }
+            header > div > div:first-child { gap: 0.3rem; }
+            #hero h1 { font-size: 2rem; }
+            .project-card { min-width: 88vw; max-width: 88vw; padding: 0.85rem; }
+            .project-card > div:last-child { align-items: flex-start; }
+            #habilidades li { font-size: 11px; }
+        }
+
+        @media (min-width: 641px) and (max-width: 900px) {
+            main { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .project-card { min-width: min(70vw, 480px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+
+</head>
+<body class="selection:bg-steel-accent selection:text-white min-h-screen flex flex-col justify-between bg-steel-950 text-steel-100">
+
+    <!-- HUD / BARRA FIXA APENAS NO TOPO -->
+    <header class="absolute top-0 left-0 w-full z-40 p-4 sm:p-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between font-mono text-xs text-steel-400 glass-panel rounded-lg px-4 py-3 border border-steel-800/80">
+            
+            <!-- Esquerda: Status & Localização -->
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-2 text-steel-100">
+                    <span class="w-2 h-2 rounded-full bg-steel-accent pulse-dot"></span>
+                    <span class="hidden sm:inline font-medium tracking-wide">DISPONÍVEL PARA PROJETOS</span>
+                    <span class="sm:hidden font-medium">DISPONÍVEL PARA PROJETOS</span>
+                </span>
+                <span class="text-steel-800">|</span>
+                <span class="hidden md:inline hover:text-steel-accent transition-colors cursor-default">
+                    <i class="fa-solid fa-location-dot mr-1 text-steel-accent"></i> Campinas-SP
+                </span>
+            </div>
+
+            <!-- Centro: Atalhos de Teclado -->
+            <div class="hidden lg:flex items-center gap-2 text-steel-500 text-[11px]">
+                <span>NAVEGAÇÃO:</span>
+                <kbd class="px-1.5 py-0.5 bg-steel-900 border border-steel-800 rounded text-steel-accent font-semibold">←</kbd>
+                <kbd class="px-1.5 py-0.5 bg-steel-900 border border-steel-800 rounded text-steel-accent font-semibold">→</kbd>
+            </div>
+
+            <!-- Direita: Relógio em Tempo Real -->
+            <div class="flex items-center gap-4">
+                <div id="live-clock" class="font-mono text-steel-accent tracking-wider font-medium">00:00:00</div>
+                <button id="theme-toggle" title="Alternar tom" class="p-1 hover:text-steel-accent transition-colors">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="pt-28 sm:pt-36 pb-20 px-4 sm:px-8 max-w-7xl mx-auto space-y-28 sm:space-y-40">
+
+        <!-- 1. HERO / CABEÇALHO -->
+        <section id="hero" class="min-h-[65vh] flex flex-col justify-center space-y-8 border-b border-steel-800/60 pb-16">
+            
+            <div class="inline-flex items-center gap-2 self-start px-3 py-1 bg-steel-900 border border-steel-800 rounded-full text-xs font-mono text-steel-400">
+                <span class="text-steel-accent">/</span>
+                <span>PORTFÓLIO & ACERVO EDITORIAL</span>
+                <span class="text-steel-800">|</span>
+                <span class="text-steel-100">2026</span>
+            </div>
+
+            <div class="space-y-4">
+                <h1 class="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-white uppercase font-sans">
+                    Felipe <br class="hidden sm:inline"/>
+                    <span class="text-steel-accent hover:text-steel-accent-light transition-colors cursor-default">Urbano de Godoy.</span>
+                </h1>
+
+                <p class="text-lg sm:text-2xl text-steel-400 font-light max-w-3xl leading-relaxed">
+                    Desenvolvedor & Social Media focado em criar interfaces digitais marcantes, produtos de alta performance e experiências memoráveis.
+                </p>
+            </div>
+
+            <!-- Botões de Ação -->
+            <div class="flex flex-wrap items-center gap-4 pt-4 font-mono text-sm">
+                <a href="#projetos" class="px-6 py-3.5 bg-steel-accent text-white font-semibold rounded hover:bg-steel-accent-hover transition-all flex items-center gap-2 group">
+                    <span>VER PROJETOS</span>
+                    <i class="fa-solid fa-arrow-down text-xs group-hover:translate-y-0.5 transition-transform"></i>
+                </a>
+                
+                <a href="#contato" class="px-6 py-3.5 bg-steel-900 text-steel-300 border border-steel-800 font-medium rounded hover:border-steel-accent hover:text-white transition-all flex items-center gap-2">
+                    <span>FALE COMIGO</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-steel-accent"></i>
+                </a>
+            </div>
+        </section>
+
+
+        <!-- 2. CARROSSEL DE PROJETOS -->
+        <section id="projetos" class="space-y-6">
+            
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-steel-800 pb-4 gap-4">
+                <div>
+                    <span class="font-mono text-xs text-steel-accent uppercase tracking-widest">01 / TRABALHOS SELECIONADOS</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-white mt-1">Projetos em Destaque</h2>
+                </div>
+                
+                <div class="flex items-center gap-3 font-mono text-xs">
+                    <span id="card-counter" class="text-steel-400 font-medium mr-2">01 / 04</span>
+                    <button id="prev-btn" class="w-10 h-10 rounded border border-steel-800 hover:border-steel-accent hover:text-steel-accent flex items-center justify-center text-steel-300 transition-all">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button id="next-btn" class="w-10 h-10 rounded border border-steel-800 hover:border-steel-accent hover:text-steel-accent flex items-center justify-center text-steel-300 transition-all">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARROSSEL HORIZONTAL -->
+            <div id="carousel-container" class="flex gap-6 overflow-x-auto no-scrollbar py-6 snap-x snap-mandatory cursor-grab active:cursor-grabbing">
+                
+                <!-- PROJETO 1 -->
+                <article class="project-card active-card min-w-[85vw] sm:min-w-[480px] md:min-w-[550px] bg-steel-900/40 border border-steel-800/80 rounded-xl p-5 sm:p-6 flex flex-col justify-between space-y-6 snap-center shrink-0">
+                    <div class="space-y-4">
+                        <div class="relative w-full h-52 sm:h-60 rounded overflow-hidden bg-steel-950 border border-steel-800 shrink-0 group">
+                            <img src="./img/the-legend-of-pixel.png" alt="Jogo arcade" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-steel-950/90 font-mono text-[10px] px-2 py-1 rounded text-steel-300 border border-steel-800">2026</span>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 font-mono text-xs">
+                            <span class="px-2.5 py-1 bg-steel-900 text-steel-300 rounded border border-steel-800">css</span>
+                            <span class="px-2.5 py-1 bg-steel-900 text-steel-300 rounded border border-steel-800">js</span>
+                            <span class="px-2.5 py-1 bg-steel-900 text-steel-300 rounded border border-steel-800">html</span>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">Jogo arcade</h3>
+                            <p class="text-steel-400 text-sm mt-2 leading-relaxed">
+                                Jogo 2D estilo arcade rpg inspirado em the legend of zelda
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-4 border-t border-steel-800/80 font-mono text-xs">
+                        <a href="https://pixel-definitivo.vercel.app" target="_blank" rel="noopener" class="text-steel-accent hover:text-steel-accent-light transition-colors flex items-center gap-2 font-semibold">
+                            <span>VER DEMO</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <a href="https://github.com/41281-collab/pixel-definitivo.git" target="_blank" rel="noopener" class="text-steel-500 hover:text-white transition-colors flex items-center gap-1.5">
+                            <i class="fa-brands fa-github text-steel-accent"></i>
+                            <span>CÓDIGO</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- PROJETO 2 -->
+                <article class="project-card min-w-[85vw] sm:min-w-[480px] md:min-w-[550px] bg-steel-900/40 border border-steel-800/80 rounded-xl p-5 sm:p-6 flex flex-col justify-between space-y-6 snap-center shrink-0">
+                    <div class="space-y-4">
+                        <div class="relative w-full h-52 sm:h-60 rounded overflow-hidden bg-steel-950 border border-steel-800 shrink-0 group">
+                            <img src="./img/uber-simulator.png.png" alt="Uber Simulator" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-steel-950/90 font-mono text-[10px] px-2 py-1 rounded text-steel-300 border border-steel-800">2025</span>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 font-mono text-xs">
+                            <span class="px-2.5 py-1 bg-steel-900 text-steel-300 rounded border border-steel-800">html</span>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">Jogo Arcade</h3>
+                            <p class="text-steel-400 text-sm mt-2 leading-relaxed">
+                                Jogo Arcade infinito 2D, simulador de uber 
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-4 border-t border-steel-800/80 font-mono text-xs">
+                        <a href="https://uber-simulator.vercel.app/" target="_blank" rel="noopener" class="text-steel-accent hover:text-steel-accent-light transition-colors flex items-center gap-2 font-semibold">
+                            <span>VER DEMO</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <a href="https://github.com/41281-collab/uber-simulator.git" target="_blank" rel="noopener" class="text-steel-500 hover:text-white transition-colors flex items-center gap-1.5">
+                            <i class="fa-brands fa-github text-steel-accent"></i>
+                            <span>CÓDIGO</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- PROJETO 4 -->
+                <article class="project-card min-w-[85vw] sm:min-w-[480px] md:min-w-[550px] bg-steel-900/40 border border-steel-800/80 rounded-xl p-5 sm:p-6 flex flex-col justify-between space-y-6 snap-center shrink-0">
+                    <div class="space-y-4">
+                        <div class="relative w-full h-52 sm:h-60 rounded overflow-hidden bg-steel-950 border border-steel-800 shrink-0 group">
+                            <img src="./img/Loot Box.pdf.png" alt="Projeto 4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-steel-950/90 font-mono text-[10px] px-2 py-1 rounded text-steel-300 border border-steel-800">2026</span>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 font-mono text-xs">
+                            <span class="px-2.5 py-1 bg-steel-900 text-steel-300 rounded border border-steel-800">html</span>
+                            <span class="px-2.5 py-1 bg-steel-900 text-steel-300 rounded border border-steel-800">css</span>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">Marcket place demonstrativo</h3>
+                            <p class="text-steel-400 text-sm mt-2 leading-relaxed">
+                                Marcket place demonstrativo para comprar skins de CS2 e Valorant
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-4 border-t border-steel-800/80 font-mono text-xs">
+                        <a href="https://marketplaceskinsdefinitivo.vercel.app" target="_blank" rel="noopener" class="text-steel-accent hover:text-steel-accent-light transition-colors flex items-center gap-2 font-semibold">
+                            <span>DOCUMENTAÇÃO</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <a href="https://github.com/41281-collab/marketplaceskinsdefinitivo.git" target="_blank" rel="noopener" class="text-steel-500 hover:text-white transition-colors flex items-center gap-1.5">
+                            <i class="fa-brands fa-github text-steel-accent"></i>
+                            <span>CÓDIGO</span>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- 3. SOBRE MIM & HISTÓRIA -->
+        <section id="sobre" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-t border-steel-800/80 pt-16">
+            <div class="lg:col-span-5 relative group">
+                <div class="relative aspect-square max-w-md mx-auto rounded-xl overflow-hidden bg-steel-900 border border-steel-800 group-hover:border-steel-accent/50 transition-colors">
+                    <img src="./img/foto.jpg" alt="Sua Foto" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 space-y-6">
+                <span class="font-mono text-xs text-steel-accent uppercase tracking-widest">02 / SOBRE MIM</span>
+                
+                <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">
+                    Criando soluções onde a função encontra a estética.
+                </h2>
+
+                <div class="space-y-4 text-steel-400 text-base sm:text-lg leading-relaxed font-light">
+                    <p>
+                        Aos 16 anos e no início da minha trajetória profissional, sou movido pela paixão em solucionar problemas complexos por meio de design inteligente e código limpo.
+                    </p>
+                    <p>
+                        Acredito na simplicidade. Quando não estou criando interfaces, estudo arquitetura de software, design, one ui, one ux e novas tendências tecnológicas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 4. HABILIDADES -->
+        <section id="habilidades" class="space-y-8 border-t border-steel-800/80 pt-16">
+            <div>
+                <span class="font-mono text-xs text-steel-accent uppercase tracking-widest">03 / ARSENAL TÉCNICO</span>
+                <h2 class="text-2xl sm:text-4xl font-bold text-white mt-1">Habilidades & Ferramentas</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-steel-900/40 border border-steel-800/80 p-6 rounded-xl space-y-4 hover:border-steel-accent/40 transition-colors">
+                    <div class="flex items-center gap-3 text-white font-mono text-sm border-b border-steel-800 pb-3">
+                        <i class="fa-solid fa-code text-steel-accent"></i>
+                        <span>DESENVOLVIMENTO</span>
+                    </div>
+                    <ul class="space-y-2.5 text-steel-400 text-sm font-mono">
+                        <li class="flex justify-between"><span>JavaScript</span> <span class="text-steel-500">Intermediário</span></li>
+                        <li class="flex justify-between"><span>HTML</span> <span class="text-steel-500">Intermediário</span></li>
+                        <li class="flex justify-between"><span>CSS</span> <span class="text-steel-500">Intermediário</span></li>
+                        <li class="flex justify-between"><span>python</span> <span class="text-steel-500">Intermediário</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-steel-900/40 border border-steel-800/80 p-6 rounded-xl space-y-4 hover:border-steel-accent/40 transition-colors">
+                    <div class="flex items-center gap-3 text-white font-mono text-sm border-b border-steel-800 pb-3">
+                        <i class="fa-solid fa-pen-nib text-steel-accent"></i>
+                        <span>DESIGN</span>
+                    </div>
+                    <ul class="space-y-2.5 text-steel-400 text-sm font-mono">
+                        <li class="flex justify-between"><span>Illustrator</span> <span class="text-steel-accent font-medium">Avançado</span></li>
+                        <li class="flex justify-between"><span>photoshop</span> <span class="text-steel-accent font-medium">Avançado</span></li>
+                        <li class="flex justify-between"><span>canva</span> <span class="text-steel-500">Intermediário</span></li>
+                        <li class="flex justify-between"><span>corel drawl</span> <span class="text-steel-500">Intermediário</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-steel-900/40 border border-steel-800/80 p-6 rounded-xl space-y-4 hover:border-steel-accent/40 transition-colors">
+                    <div class="flex items-center gap-3 text-white font-mono text-sm border-b border-steel-800 pb-3">
+                        <i class="fa-solid fa-sliders text-steel-accent"></i>
+                        <span>METODOLOGIAS</span>
+                    </div>
+                    <ul class="space-y-2.5 text-steel-400 text-sm font-mono">
+                        <li class="flex justify-between"><span>Git / GitHub</span> <span class="text-steel-accent font-medium">Diário</span></li>
+                        <li class="flex justify-between"><span>Metodologias Ágeis</span> <span class="text-steel-500">Scrum</span></li>
+                        <li class="flex justify-between"><span>Clean Code</span> <span class="text-steel-accent font-medium">Foco</span></li>
+                        <li class="flex justify-between"><span>Comunicação</span> <span class="text-steel-accent font-medium">Chave</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 5. TRAJETÓRIA -->
+        <section id="trajetoria" class="space-y-8 border-t border-steel-800/80 pt-16">
+            <div>
+                <span class="font-mono text-xs text-steel-accent uppercase tracking-widest">04 / CARREIRA</span>
+                <h2 class="text-2xl sm:text-4xl font-bold text-white mt-1">Experiência & Formação</h2>
+            </div>
+
+            <div class="relative border-l border-steel-800 ml-4 space-y-12">
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-steel-700 group-hover:bg-steel-accent transition-colors"></div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 font-mono text-xs text-steel-500 mb-2">
+                        <span class="text-steel-accent font-semibold">Instituto Educacional Raphael di Santo</span>
+                        <span>2025 — ATUAL</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Estudante do curso técnico de tecnologia da informação</h3>
+                    <p class="text-steel-400 text-sm mt-2 leading-relaxed max-w-3xl">
+                        Estudante do segundo ano do curso, em busca constante de atualização técnica e capacitação alinhada às exigências do mundo profissional.
+                    </p>
+                </div>
+
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-steel-700 group-hover:bg-steel-accent transition-colors"></div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 font-mono text-xs text-steel-500 mb-2">
+                        <span class="text-steel-accent font-semibold">Estágio</span>
+                        <span>2025 — 2026</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Jovem Aprendiz</h3>
+                    <p class="text-steel-400 text-sm mt-2 leading-relaxed max-w-3xl">
+                        Trajetória profissional iniciada aos 15 anos como Jovem Aprendiz, com posterior atuação em estágio.
+                    </p>
+                </div>
+
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-steel-700 group-hover:bg-steel-accent transition-colors"></div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 font-mono text-xs text-steel-500 mb-2">
+                        <span class="text-steel-accent font-semibold">Fisk</span>
+                        <span>2022 — 2024</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Cursos Profionalizantes</h3>
+                    <p class="text-steel-400 text-sm mt-2 leading-relaxed max-w-3xl">
+                        Capacitação profissionalizante com foco em tecnologias web (HTML/CSS), ferramentas do Pacote Adobe, produtividade em Pacote Office e navegação no Windows.
+                    </p>
+                </div>
+                <!-- Botão de Currículo em PDF -->
+                <div class="mt-4 mb-6">
+                    <a href="./img/curriculo - Copia.pdf" target="_blank" rel="noopener noreferrer" 
+                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow transition-colors duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 2 0 01-2-2V5a2 2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                         Visualizar Currículo (PDF)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONTATO E REDES SOCIAIS -->
+        <section id="contato" class="space-y-8 border-t border-steel-800/80 pt-16">
+            <div>
+                <span class="font-mono text-xs text-steel-accent uppercase tracking-widest">05 / CONEXÃO</span>
+                <h2 class="text-2xl sm:text-4xl font-bold text-white mt-1">Vamos Construir Algo Juntos?</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="space-y-6">
+                    <p class="text-steel-400 text-base sm:text-lg leading-relaxed font-light">
+                        Estou aberto a novas oportunidades e projetos. Envie uma mensagem!
+                    </p>
+                    
+                    <div class="space-y-3 font-mono text-sm">
+                        <a href="mailto:felipeurbgodoy@gmail.com" class="flex items-center gap-3 text-white hover:text-steel-accent transition-colors">
+                            <i class="fa-solid fa-envelope text-steel-accent"></i>
+                            <span>felipeurbgodoy@gmail.com</span>
+                        </a>
+                        <div class="flex items-center gap-3 text-steel-400">
+                            <i class="fa-solid fa-phone text-steel-accent"></i>
+                            <span>+55 (19) 99332-4544</span>
+                        </div>
+                    </div>
+
+                    <!-- Redes Sociais -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2 font-mono text-xs">
+                        <a href="https://www.linkedin.com/in/felipe-urbano-de-godoy-180197368/" target="_blank" rel="noopener" class="px-4 py-2 bg-steel-900 border border-steel-800 rounded text-steel-300 hover:text-white hover:border-steel-accent transition-all flex items-center gap-2">
+                            <i class="fa-brands fa-linkedin-in text-steel-accent"></i>
+                            <span>LINKEDIN</span>
+                        </a>
+                        <a href="https://www.instagram.com/flp.godoy/" target="_blank" rel="noopener" class="px-4 py-2 bg-steel-900 border border-steel-800 rounded text-steel-300 hover:text-white hover:border-steel-accent transition-all flex items-center gap-2">
+                            <i class="fa-brands fa-instagram text-steel-accent"></i>
+                            <span>INSTAGRAM</span>
+                        </a>
+                        <a href="https://github.com/felipeurbgodoy" target="_blank" rel="noopener" class="px-4 py-2 bg-steel-900 border border-steel-800 rounded text-steel-300 hover:text-white hover:border-steel-accent transition-all flex items-center gap-2">
+                            <i class="fa-brands fa-github text-steel-accent"></i>
+                            <span>GITHUB</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="border-t border-steel-800/80 py-8 px-4 sm:px-8 text-steel-500 font-mono text-xs max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+            © 2026 FELIPE URBANO DE GODOY. TODOS OS DIREITOS RESERVADOS.
+        </div>
+    </footer>
+
+    <!-- JS Externo -->
+    <script src="./js/index.js"></script>
+</body>
+</html>
